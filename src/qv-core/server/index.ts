@@ -13,10 +13,11 @@ const collections = ['accounts', 'characters', 'vehicles'];
 
 (async () => {
     const connect = await Database.init(url, dbName, collections);
+    await Database.createSearchIndex('license', 'accounts');
 })();
 
-alt.on('playerConnect', async (player) => {
-    await Database.createSearchIndex('license', 'accounts');
+alt.on('playerConnect', (player) => {
+    alt.log('SE LLAMO');
     player.setSyncedMeta('license', 'JERICOFXX');
     QVCore.Player.Login(player, 'JERICOFXX');
     player.spawn(0, 0, 0 + 70);
@@ -34,5 +35,5 @@ chat.registerCmd('g', (player, args) => {
     alt.emit('jerico', player);
 });
 alt.on('playerDisconnect', (player) => {
-    QVCore.Player.Save(player.id);
+    // QVCore.Player.Save(player.id);
 });
