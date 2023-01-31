@@ -2,216 +2,216 @@
 import * as alt from 'alt-server';
 import Database from '@stuyk/ezmongodb';
 import ShortUniqueId from 'short-unique-id';
-import { Config } from '../../../shared/config';
-import { Jobs } from '../../../shared/jobs';
+import {Config} from '../../../shared/config';
+import {Jobs} from '../../../shared/jobs';
 // let Players = {};
 // export let Player = {};
 class PlayerClass {
-    id = '';
-    license = '';
-    newData = {};
-    Data = {};
-    PlayerData = {};
-    Players = {};
-    public async Login(id?, license, newData?) {
-        this.id = id;
-        alt.log('JERE JERE');
-        this.license = license;
-        this.newData = newData;
-        this.Data = await Database.fetchWithSearch(this.license, 'accounts');
-        if (this.Data[0] === undefined) {
-            alt.logError('[CORE] No player data Detected');
-            return this.CheckPlayerData(false);
-        }
-        alt.log('[CORE] ~g~Player Detected~g~');
-        return this.CheckPlayerData(true);
-    }
-    public CheckPlayerData(hasData: boolean) {
-        if (!hasData) {
-            // if (!this.player && !this.player.valid) return;
+	id = '';
+	license = '';
+	newData = {firstname: 'null', lastname: 'null', birthdate: null, gender: 0, backstory: 'null', nationality: 'QV'};
+	Data = {};
+	PlayerData = {};
+	Players = {};
+	public async Login(id?, license, newData?) {
+		this.id = id;
+		alt.log('JERE JERE');
+		this.license = license;
+		this.newData = newData;
+		this.Data = await Database.fetchWithSearch(this.license, 'accounts');
+		if (this.Data[0] === undefined) {
+			alt.logError('[CORE] No player data Detected');
+			return this.CheckPlayerData(false);
+		}
+		alt.log('[CORE] ~g~Player Detected~g~');
+		return this.CheckPlayerData(true);
+	}
+	public CheckPlayerData(hasData: boolean) {
+		if (!hasData) {
+			// if (!this.player && !this.player.valid) return;
 
-            this.PlayerData = {
-                id: this.id,
-                // player: this.player,
-                license: this.license,
-                // name: this.player.name,
-                citizenid: this.GenerateCitizenID(),
-                money: { ...Config.money },
-                charinfo: {
-                    firstname: this.newData.firstname || 'JericoFX',
-                    lastname: this.newData.lastname || 'Acosta',
-                    birthdate: this.newData.birthdate || null,
-                    gender: this.newData.gender || 0,
-                    backstory: this.newData.backstory || 'placeholder backstory',
-                    nationality: this.newData.nationality || 'USA',
-                },
-                metadata: {
-                    hunger: 100,
-                    thirst: 100,
-                    stress: 0,
-                    isdead: false,
-                    inlaststand: false,
-                    armor: 0,
-                    ishandcuffed: false,
-                    tracker: false,
-                    injail: 0,
-                    jailitems: {},
-                    status: {},
-                    phone: {},
-                    fitbit: {},
-                    commandbinds: {},
-                    bloodtype: 'AV-0',
-                    dealerrep: 0,
-                    craftingrep: 0,
-                    attachmentcraftingrep: 0,
-                    currentapartment: null,
-                    jobrep: {
-                        tow: 0,
-                        trucker: 0,
-                        taxi: 0,
-                        hotdog: 0,
-                    },
-                    callsign: 'NO CALLSIGN',
-                    licences: {
-                        driver: true,
-                        business: false,
-                        weapon: false,
-                    },
-                    inside: {
-                        house: null,
-                        apartment: {
-                            apartmentType: null,
-                            apartmentId: null,
-                        },
-                    },
-                },
-                job: {
-                    name: 'unemployed',
-                    label: 'Civilian',
-                    payment: 10,
-                    type: 'none',
-                    isboss: false,
-                    grade: {
-                        name: 'Freelancer',
-                        level: 0,
-                    },
-                },
-                gang: {
-                    name: 'none',
-                    label: 'No Gang Affiliaton',
-                    isboss: false,
-                    grade: {
-                        name: 'none',
-                        level: 0,
-                    },
-                },
+			this.PlayerData = {
+				id: this.id,
+				// player: this.player,
+				license: this.license,
+				// name: this.player.name,
+				citizenid: this.GenerateCitizenID(),
+				money: {...Config.money},
+				charinfo: {
+					firstname: this.newData.firstname || 'JericoFX',
+					lastname: this.newData.lastname || 'Acosta',
+					birthdate: this.newData.birthdate || null,
+					gender: this.newData.gender || 0,
+					backstory: this.newData.backstory || 'placeholder backstory',
+					nationality: this.newData.nationality || 'USA',
+				},
+				metadata: {
+					hunger: 100,
+					thirst: 100,
+					stress: 0,
+					isdead: false,
+					inlaststand: false,
+					armor: 0,
+					ishandcuffed: false,
+					tracker: false,
+					injail: 0,
+					jailitems: {},
+					status: {},
+					phone: {},
+					fitbit: {},
+					commandbinds: {},
+					bloodtype: 'AV-0',
+					dealerrep: 0,
+					craftingrep: 0,
+					attachmentcraftingrep: 0,
+					currentapartment: null,
+					jobrep: {
+						tow: 0,
+						trucker: 0,
+						taxi: 0,
+						hotdog: 0,
+					},
+					callsign: 'NO CALLSIGN',
+					licences: {
+						driver: true,
+						business: false,
+						weapon: false,
+					},
+					inside: {
+						house: null,
+						apartment: {
+							apartmentType: null,
+							apartmentId: null,
+						},
+					},
+				},
+				job: {
+					name: 'unemployed',
+					label: 'Civilian',
+					payment: 10,
+					type: 'none',
+					isboss: false,
+					grade: {
+						name: 'Freelancer',
+						level: 0,
+					},
+				},
+				gang: {
+					name: 'none',
+					label: 'No Gang Affiliaton',
+					isboss: false,
+					grade: {
+						name: 'none',
+						level: 0,
+					},
+				},
 
-                get jobName(): string {
-                    return this.job.name;
-                },
-                get joblabel(): string {
-                    return this.job.label;
-                },
-            };
-            return this.CreatePlayer();
-        } else {
-            this.PlayerData = this.Data[0];
-            return this.CreatePlayer();
-        }
-    }
-    private GenerateCitizenID() {
-        const uid = new ShortUniqueId({
-            dictionary: 'alphanum_upper',
-            length: 6,
-        });
-        return uid();
-    }
-    public CreatePlayer() {
-        this.Functions = {
-            UpdatePlayerData: () => {
-                alt.emit('QVCore::Player::SetPlayerData', this.PlayerData);
-                alt.emitClientRaw(this.player, 'QVCore::Player::SetPlayerData', this.PlayerData);
-            },
-            SetJob: (job: string, grade: number) => {
-                let jobs = job.toLowerCase();
-                let grades = grade || 0;
-                if (!Jobs[jobs]) {
-                    alt.logError(`[CORE] No job with name: ${jobs} detected`);
-                    return;
-                }
-                this.PlayerData.job.name = jobs;
-                this.PlayerData.job.label = Jobs[jobs].label;
-                this.PlayerData.job.onduty = Jobs[jobs].defaultDuty;
-                this.PlayerData.job.type = Jobs[jobs].type || 'none';
-                if (Jobs[jobs].grades[grades]) {
-                    const jobgrade = Jobs[jobs].grades[grades];
-                    this.PlayerData.job.grade.name = jobgrade.name;
-                    this.PlayerData.job.grade.level = grades;
-                    this.PlayerData.job.grade.payment = jobgrade.payment || 30;
-                    this.PlayerData.job.grade.isboss = jobgrade.isboss || false;
-                } else {
-                    this.PlayerData.job.grade.name = 'No Grades';
-                    this.PlayerData.job.grade.level = 0;
-                    this.PlayerData.job.payment = 30;
-                    this.PlayerData.job.isboss = false;
-                }
-                this.UpdatePlayerData();
-            },
-            SetPlayerData: (key, val) => {
-                if (!typeof key === 'string') return;
-                this.PlayerData[key] = val;
-                this.player.setSyncedMeta(key, val);
-                this.UpdatePlayerData();
-            },
-            SetMetaData: (meta, val) => {
-                this.PlayerData.metadata[meta] = val;
-                player.setSyncedMeta(meta, val);
-                this.UpdatePlayerData();
-            },
-            GetMetaData: (meta) => {
-                if (!typeof meta === 'string' || meta === '') return;
-                return this.PlayerData.metadata[meta] || false;
-            },
-            Save: (id) => {
-                this.Save(id);
-            },
-        };
-        alt.log('TIPO AL INSERTAR', this.id);
-        this.Players[this.id] = this;
-        this.Save();
-    }
+				get jobName(): string {
+					return this.job.name;
+				},
+				get joblabel(): string {
+					return this.job.label;
+				},
+			};
+			return this.CreatePlayer();
+		} else {
+			this.PlayerData = this.Data[0];
+			return this.CreatePlayer();
+		}
+	}
+	private GenerateCitizenID() {
+		const uid = new ShortUniqueId({
+			dictionary: 'alphanum_upper',
+			length: 6,
+		});
+		return uid();
+	}
+	public CreatePlayer() {
+		this.Functions = {
+			UpdatePlayerData: () => {
+				alt.emit('QVCore::Player::SetPlayerData', this.PlayerData);
+				alt.emitClientRaw(this.player, 'QVCore::Player::SetPlayerData', this.PlayerData);
+			},
+			SetJob: (job: string, grade: number) => {
+				let jobs = job.toLowerCase();
+				let grades = grade || 0;
+				if (!Jobs[jobs]) {
+					alt.logError(`[CORE] No job with name: ${jobs} detected`);
+					return;
+				}
+				this.PlayerData.job.name = jobs;
+				this.PlayerData.job.label = Jobs[jobs].label;
+				this.PlayerData.job.onduty = Jobs[jobs].defaultDuty;
+				this.PlayerData.job.type = Jobs[jobs].type || 'none';
+				if (Jobs[jobs].grades[grades]) {
+					const jobgrade = Jobs[jobs].grades[grades];
+					this.PlayerData.job.grade.name = jobgrade.name;
+					this.PlayerData.job.grade.level = grades;
+					this.PlayerData.job.grade.payment = jobgrade.payment || 30;
+					this.PlayerData.job.grade.isboss = jobgrade.isboss || false;
+				} else {
+					this.PlayerData.job.grade.name = 'No Grades';
+					this.PlayerData.job.grade.level = 0;
+					this.PlayerData.job.payment = 30;
+					this.PlayerData.job.isboss = false;
+				}
+				this.UpdatePlayerData();
+			},
+			SetPlayerData: (key, val) => {
+				if (!typeof key === 'string') return;
+				this.PlayerData[key] = val;
+				this.player.setSyncedMeta(key, val);
+				this.UpdatePlayerData();
+			},
+			SetMetaData: (meta, val) => {
+				this.PlayerData.metadata[meta] = val;
+				player.setSyncedMeta(meta, val);
+				this.UpdatePlayerData();
+			},
+			GetMetaData: (meta) => {
+				if (!typeof meta === 'string' || meta === '') return;
+				return this.PlayerData.metadata[meta] || false;
+			},
+			Save: (id) => {
+				this.Save(id);
+			},
+		};
+		alt.log('TIPO AL INSERTAR', this.id);
+		this.Players[this.id] = this;
+		this.Save();
+	}
 
-    public GetItemByID(id) {
-        alt.log('TIPO AL INSERTAR', this.Players[id].PlayerData);
-        return this.Players[id];
-    }
+	public GetItemByID(id) {
+		alt.log('TIPO AL INSERTAR', this.Players[id].PlayerData);
+		return this.Players[id];
+	}
 
-    public async Save() {
-        const jere = new alt.Player.getByID(this.id);
-        const coords = jere.pos;
-        let Data: Object = this.Players[this.id].PlayerData;
-        Data.position = coords;
-        if (Data) {
-            const awa = await Database.fetchAllByField('license', Data.license, 'accounts');
-            if (awa.length > 0) {
-                try {
-                    await Database.updatePartialData(awa._id, { ...Data }, 'accounts');
-                    alt.log(`~g~ Player ${jere.name} saved! ~g~`);
-                    return true;
-                } catch (error) {
-                    alt.logError(error);
-                }
-            } else {
-                try {
-                    const Jerico = await Database.insertData(JSON.parse(JSON.stringify(Data)), 'accounts', false);
-                    alt.log(`~g~ Player Inserted ${jere.name} saved! ~g~`);
-                    return true;
-                } catch (error) {
-                    alt.logError(error);
-                }
-            }
-        }
-    }
+	public async Save() {
+		const jere = new alt.Player.getByID(this.id);
+		const coords = jere.pos;
+		let Data: Object = this.Players[this.id].PlayerData;
+		Data.position = coords;
+		if (Data) {
+			const awa = await Database.fetchAllByField('license', Data.license, 'accounts');
+			if (awa.length > 0) {
+				try {
+					await Database.updatePartialData(awa._id, {...Data}, 'accounts');
+					alt.log(`~g~ Player ${jere.name} saved! ~g~`);
+					return true;
+				} catch (error) {
+					alt.logError(error);
+				}
+			} else {
+				try {
+					const Jerico = await Database.insertData(JSON.parse(JSON.stringify(Data)), 'accounts', false);
+					alt.log(`~g~ Player Inserted ${jere.name} saved! ~g~`);
+					return true;
+				} catch (error) {
+					alt.logError(error);
+				}
+			}
+		}
+	}
 }
 let Player = {};
 export default Player = new PlayerClass();
