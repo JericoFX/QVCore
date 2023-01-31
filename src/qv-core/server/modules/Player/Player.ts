@@ -15,7 +15,6 @@ class PlayerClass {
 	Players = {};
 	public async Login(id?, license, newData?) {
 		this.id = id;
-		alt.log('JERE JERE');
 		this.license = license;
 		this.newData = newData;
 		this.Data = await Database.fetchWithSearch(this.license, 'accounts');
