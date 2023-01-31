@@ -5,7 +5,6 @@ resources
 *.dll
 *.exe
 update.json
-modules/
 data/
 *.log
 cache/

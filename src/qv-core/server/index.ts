@@ -2,11 +2,8 @@
 import * as alt from 'alt-server';
 import * as chat from 'chat';
 import Database from '@stuyk/ezmongodb';
-import { Player } from './modules/Player/Player';
-import { Functions } from './modules/Player/Functions';
-export let QVCore = {};
-QVCore.Player = Player;
-QVCore.Functions = Functions;
+import {QVCore} from "./exports";
+
 const url = 'mongodb://localhost:27017';
 const dbName = 'jericore';
 const collections = ['accounts', 'characters', 'vehicles'];

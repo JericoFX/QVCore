@@ -1,5 +1,6 @@
 import * as alt from 'alt-server';
-import { QVCore } from '../qv-core/server';
-alt.on('jerico', async (player) => {
-    QVCore.Functions.SetJob(player.id, 'police', 3);
+import { QVCore } from '../qv-core/server/exports';
+
+alt.on('jerico', (player) => {
+    alt.log(QVCore.Player.GetPlayerById(player.id));
 });
