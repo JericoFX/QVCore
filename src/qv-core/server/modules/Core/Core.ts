@@ -272,6 +272,10 @@ function ExtendPrototype(player) {
 			player.job.defaultDuty = v;
 		},
 	});
+
+    /**
+	 * Getter: Return the firstname of the player
+	 */
 	Object.defineProperty(alt.Player.prototype, 'firstname', {
 		get: () => {
 			return player.charinfo.firstname;
