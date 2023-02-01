@@ -13,7 +13,7 @@ export const Jobs = {
     ['police']: {
         label: 'Law Enforcement',
         type: 'leo',
-        defaultDuty: true,
+        isOnDuty: true,
         offDutyPay: false,
         grades: {
             ['0']: {
