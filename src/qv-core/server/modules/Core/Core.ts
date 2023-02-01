@@ -133,31 +133,18 @@ export function GetPlayerReady(player) {
 				player.setSyncedMeta('charinfo', {...newData});
 			}
 		}
-		alt.log(Jobs['unemployed']);
 		for (const [key, value] of Object.entries(newData)) {
-			// alt.Player.prototype[key] = newData[key];
-			// player.setSyncedMeta(key, newData[key]);
-			//player.citizenid = 'JERE JERE';
-			alt.log(key);
+			player.setSyncedMeta(key, newData[key]);
 			player[key] = newData[key];
-
-			// Object.defineProperty(player, key,{
-			//     newData[key],
-			//     writable:true
-			// });
-			//  player.citizenid = newData[key].citizenid;
-			// player[key] = newData[key];
-			//  alt.log(Dkey[key]);
 		}
-		alt.log('CID', player.citizenid);
-		alt.log('JOBNAME: ', player.jobName);
 		Players[player.id] = newData;
 		return player.Save();
 	};
 	player.Test = () => {
-		alt.log(Players[player.id]);
+		alt.log(player.charinfo);
 		return alt.log('HIIII MIS CHIQUIS');
 	};
+
 	player.GetData = () => {
 		return Players[player.id];
 	};
@@ -273,7 +260,7 @@ function ExtendPrototype(player) {
 		},
 	});
 
-    /**
+	/**
 	 * Getter: Return the firstname of the player
 	 */
 	Object.defineProperty(alt.Player.prototype, 'firstname', {
@@ -281,6 +268,10 @@ function ExtendPrototype(player) {
 			return player.charinfo.firstname;
 		},
 	});
+
+	/**
+	 * Getter: Return the firstname of the player
+	 */
 	Object.defineProperty(alt.Player.prototype, 'lastname', {
 		get: () => {
 			return player.charinfo.lastname;
