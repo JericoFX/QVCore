@@ -21,77 +21,83 @@ declare module 'alt-server' {
 }
 
 let Players = {};
-const Information = {
-	player: '',
-	license: 'JERICOFXX',
-	citizenid: GenerateCitizenID(),
-	money: {},
-	charinfo: {
-		firstname: '',
-		lastname: '',
-		birthdate: '',
-		gender: 0,
-		backstory: '',
-		nationality: '',
-	},
-	metadata: {
-		hunger: 100,
-		thirst: 100,
-		stress: 0,
-		isDead: false,
-		inlaststand: false,
-		armor: 0,
-		isHandcuffed: false,
-		tracker: false,
-		inJail: false,
-		jailItems: [],
-		status: {},
-		phone: {},
-		fitbit: {},
-		commandbinds: {},
-		bloodtype: {},
-		dealerrep: 0,
-		craftingrep: 0,
-		attachmentcraftingrep: 0,
-		currentapartment: null,
-		jobRep: {
-			tow: 0,
-			trucker: 0,
-			taxi: 0,
-			hotdog: 0,
+
+function ReturnDefaultData() {
+	return {
+		_id: '',
+		license: 'JERICOFXX',
+		citizenid: GenerateCitizenID(),
+		money: {},
+		charinfo: {
+			firstname: '',
+			lastname: '',
+			birthdate: '',
+			gender: 0,
+			backstory: '',
+			nationality: '',
 		},
-		callSign: 'NO CALLSIGN',
-		licences: {
-			driver: true,
-			business: false,
-			weapon: false,
-		},
-		inside: {
-			house: null,
-			apartment: {
-				apartmentType: null,
-				apartmentId: null,
+		metadata: {
+			hunger: 100,
+			thirst: 100,
+			stress: 0,
+			isDead: false,
+			inlaststand: false,
+			armor: 0,
+			isHandcuffed: false,
+			tracker: false,
+			inJail: false,
+			jailItems: [],
+			status: {},
+			phone: {},
+			fitbit: {},
+			commandbinds: {},
+			bloodtype: {},
+			dealerrep: 0,
+			craftingrep: 0,
+			attachmentcraftingrep: 0,
+			currentapartment: null,
+			jobRep: {
+				tow: 0,
+				trucker: 0,
+				taxi: 0,
+				hotdog: 0,
+			},
+			callSign: 'NO CALLSIGN',
+			licences: {
+				driver: true,
+				business: false,
+				weapon: false,
+			},
+			inside: {
+				house: null,
+				apartment: {
+					apartmentType: null,
+					apartmentId: null,
+				},
 			},
 		},
-	},
-	job: {
-		label: 'Civilian',
-		type: 'none',
-		isBoss: false,
-		onDuty: false,
-		grade: {
-			name: 'Freelancer',
-			level: 0,
-			payment: 10,
-			isboss: true,
+		job: {
+			label: 'Civilian',
+			type: 'none',
+			isBoss: false,
+			onDuty: false,
+			grade: {
+				name: 'Freelancer',
+				level: 0,
+				payment: 10,
+				isboss: true,
+			},
 		},
-	},
-	gang: {
-		name: 'none',
-		level: 0,
-		isBoss: false,
-	},
-};
+		gang: {
+			name: 'none',
+			level: 0,
+			isBoss: false,
+		},
+	};
+}
+// const Information = {
+
+// };
 
 export function GetPlayerReady(player) {
 	if (!player && !player.valid) {
@@ -115,7 +121,7 @@ export function GetPlayerReady(player) {
 		const exist = await Database.fetchWithSearch(player.license, 'accounts');
 		if (exist[0] === undefined) {
 			alt.log('NEW PLAYER');
-			return player.SetData(true, Information);
+			return player.SetData(true, ReturnDefaultData());
 		}
 		alt.log('PLAYER EXISTED');
 		return player.SetData(false, exist[0]);
@@ -151,8 +157,6 @@ export function GetPlayerReady(player) {
 	player.Save = async () => {
 		const exist = await Database.fetchWithSearch(player.license, 'accounts');
 		const Data = player.GetData();
-
-		//const Setted = player.SetData()
 		if (!exist[0] === undefined) {
 			await Database.updatePartialData(exist._id, {...Data}, 'accounts');
 		} else {
