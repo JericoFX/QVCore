@@ -3,8 +3,8 @@ import * as alt from 'alt-server';
 //import * as chat from 'chat';
 import ShortUniqueId from 'short-unique-id';
 import Database from '@stuyk/ezmongodb';
-import { Jobs } from '../../../shared/jobs';
-import { Config } from '../../../shared/config';
+import {Jobs} from '../../../shared/jobs';
+import {Config} from '../../../shared/config';
 
 declare module 'alt-server' {
     interface Player {
@@ -15,6 +15,7 @@ declare module 'alt-server' {
         metadata: Object;
         job: Object;
         gang: Object;
+
         get jobName(): string;
     }
 }
@@ -153,31 +154,9 @@ export function GetPlayerReady(player) {
     alt.Player.prototype.metadata = {};
     alt.Player.prototype.job = {};
     alt.Player.prototype.gang = {};
-    //alt.Player.prototype.jobName = () => player.job.name;
-    Object.defineProperty(alt.Player.prototype, 'jobName', {
-        /**
-         * Get the current job, so no more QVCore.Functions.GetPlayer(player.id)
-         * Now is just player.jobName
-         * @returns
-         */
+    // alt.Player.prototype.jobName =  player.job.name;
 
-        get: () => {
-            return player.job.label;
-        },
 
-        /**
-         * The same way now you can set the job with:
-         * player.jobName = "police"
-         * @returns
-         */
-        set: (v: string) => {
-            if (!Jobs[v]) {
-                alt.logError(`[CORE] No Job with the name ${v} detected`);
-                return;
-            }
-            player.job.label = v;
-        },
-    });
     player.Login = async () => {
         if (!player && !player.valid) {
             alt.logError(`[CORE] Player not valid`);
@@ -196,12 +175,12 @@ export function GetPlayerReady(player) {
         if (!player && !player.valid) {
             alt.logError(`[CORE] Player not valid`);
         }
-        const Dkey = { ...newData };
+        const Dkey = {...newData};
         if (newPayer) {
             if (newData.firstname !== '') {
                 newData.job = Jobs['unemployed'];
-                newData.money = { ...Config.money };
-                player.setSyncedMeta('charinfo', { ...newData });
+                newData.money = {...Config.money};
+                player.setSyncedMeta('charinfo', {...newData});
             }
         }
         alt.log(Jobs['unemployed']);
@@ -238,16 +217,86 @@ export function GetPlayerReady(player) {
 
         //const Setted = player.SetData()
         if (!exist[0] === undefined) {
-            await Database.updatePartialData(exist._id, { ...Data }, 'accounts');
+            await Database.updatePartialData(exist._id, {...Data}, 'accounts');
         } else {
             const Jerico = await Database.insertData(Data, 'accounts', false);
         }
     };
 }
+
 function GenerateCitizenID() {
     const uid = new ShortUniqueId({
         dictionary: 'alphanum_upper',
         length: 6,
     });
     return uid();
+}
+
+
+function ExtendPrototype(player) {
+    Object.defineProperty(alt.Player.prototype, 'jobName', {
+        /**
+         * Get the current job, so no more QVCore.Functions.GetPlayer(player.id)
+         * Now is just player.jobName
+         * @returns
+         */
+
+        get: () => {
+            return player.job.label;
+        },
+
+        /**
+         * The same way now you can set the job with:
+         * player.jobName = "police"
+         * @returns
+         */
+        set: (v: string) => {
+            if (!Jobs[v]) {
+                alt.logError(`[CORE] No Job with the name ${v} detected`);
+                return;
+            }
+            player.job = Jobs[v];
+            player.grade = Jobs[v].grade[0]
+        },
+        writable: true
+    });
+    /**
+         * Get the current job type
+         * Now is just player.jobType print("none" or "leo")
+         * @returns
+         */
+    Object.defineProperty(alt.Player.prototype, 'jobType', {
+        get: () => {
+            return player.job.type;
+        },
+    });
+
+
+
+    Object.defineProperty(alt.Player.prototype, 'jobGrade', {
+        /**
+         * Get the current job, so no more QVCore.Functions.GetPlayer(player.id)
+         * Now is just player.jobName
+         * @returns
+         */
+
+        get: () => {
+            return Jobs[player.job.name].grade[player.job.grade].label;
+            },
+
+        /**
+         * The same way now you can set the job with:
+         * player.jobName = "police"
+         * @returns
+         */
+        set: (v: number) => {
+            if (!Jobs[player.job.name].grade[v]) {
+                alt.logError(`[CORE] No Grade with the number ${v} detected`);
+                return;
+            }
+//            player.job = Jobs[v];
+            player.grade = Jobs[player.job.name].grade[v]
+        },
+        writable: true
+    });
 }
