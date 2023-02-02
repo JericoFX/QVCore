@@ -125,14 +125,16 @@ export function GetPlayerReady(player) {
 		}
 		if(citizenid){
 			const exist = await Database.fetchWithSearch(citizenid 'accounts');
+			if(exist[0] === undefined){
+				alt.logError(`[CORE] No player with the CitizenID: ${citizenid} Detected`)
+				return
+			}
 			alt.log(`[CORE] ~g~Loaded ${citizenid}~g~`);
 			return player.SetData(false, exist[0]);
 		}
-		
-		if (exist[0] === undefined) {
-			alt.log('NEW PLAYER');
+			alt.log(`[CORE] ~y~No data Detected~y~ \n ~g~Creating Player~g~`);
 			return player.SetData(true, ReturnDefaultData(newData));
-		}
+		
 	};
 
 	player.SetData = async (newPayer, newData) => {
