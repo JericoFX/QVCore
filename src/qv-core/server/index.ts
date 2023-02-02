@@ -4,7 +4,7 @@ import * as chat from 'chat';
 import Database from '@stuyk/ezmongodb';
 import { GetPlayerReady } from './modules/Core/Core';
 import { allowDamageEventsForNonNetworkedObjects } from 'natives';
-
+import './modules/Multicharacter/Server';
 const url = 'mongodb://localhost:27017';
 const dbName = 'jericore';
 const collections = ['accounts', 'characters', 'vehicles'];
@@ -41,8 +41,6 @@ chat.registerCmd('g', (player) => {
 setInterval(async () => {
     alt.Player.all.forEach(async (item) => {
         item.Save();
-        alt.log(item.jobName);
-        item.jobName = 'police';
         alt.log(item.jobName);
     });
 }, 10000);

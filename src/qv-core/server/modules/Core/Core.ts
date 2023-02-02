@@ -310,4 +310,24 @@ function ExtendPrototype(player) {
             return player.charinfo.gender || 0;
         },
     });
+    Object.defineProperty(alt.Player.prototype, 'cash', {
+        get: () => {
+            return player.money.cash || 0;
+        },
+    });
+    Object.defineProperty(alt.Player.prototype, 'bank', {
+        get: () => {
+            return player.money.bank || 0;
+        },
+    });
+    Object.defineProperty(alt.Player.prototype, 'black', {
+        get: () => {
+            return player.money.black || 0;
+        },
+    });
+    Object.defineProperty(alt.Player.prototype, 'cid', {
+        get: () => {
+            return player.money.black || 0;
+        },
+    });
 }
