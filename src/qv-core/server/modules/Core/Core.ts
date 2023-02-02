@@ -156,6 +156,24 @@ export function GetPlayerReady(player) {
 		Players[player.id] = newData;
 		return player.Save();
 	};
+
+	/**
+	 * Return all the players with a license.
+	 * @param citizenid  | string
+	 * @returns Array | Object
+	 */
+	player.GetCharacters = async (license:string):Object| Array =>{
+		try {
+			const players = await Database.fetchAllByField('license',license , "accounts");
+			if(players[0] === undefinied){
+				return
+			}
+			return players
+		} catch (error) {
+			alt.logError(error)
+		}
+	}
+
 	player.Test = () => {
 		alt.log(player.charinfo);
 		return alt.log('HIIII MIS CHIQUIS');
@@ -164,6 +182,8 @@ export function GetPlayerReady(player) {
 	player.GetData = () => {
 		return Players[player.id];
 	};
+
+	
 	player.Save = async () => {
 		alt.log('Player Savedd');
 		const exist = await Database.fetchWithSearch(player.license, 'accounts');
@@ -175,7 +195,6 @@ export function GetPlayerReady(player) {
 		} else {
 			const Jerico = await Database.insertData(Data, 'accounts', false);
 		}
-		return 'SALVADO';
 	};
 }
 
