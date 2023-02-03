@@ -179,29 +179,21 @@ export function GetPlayerReady(player) {
 		}
 	};
 
-	player.Test = () => {
-		alt.log(player.charinfo);
-		return alt.log('HIIII MIS CHIQUIS');
-	};
-
 	player.GetData = () => {
 		return Players.get(player.id);
 	};
 
 	player.Save = async () => {
-		alt.log('Player Savedd');
 		let Data = player.GetData();
-		//alt.log(Data);
-
-		//     const exist = await Database.fetchWithSearch(Data.license, 'accounts');
-		//     Data.pos = player.pos;
-		//     if (exist.length > 0) {
-		//         await Database.updatePartialData(exist[0]._id, { ...Data }, 'accounts');
-		//         alt.log(`[CORE] ~g~Player ${player.fullName} Saved~g~`);
-		//     } else {
-		//         const Jerico = await Database.insertData(Data, 'accounts', false);
-		//     }
-		// };
+		    const exist = await Database.fetchWithSearch(Data.license, 'accounts');
+		    Data.pos = player.pos;
+		    if (exist.length > 0) {
+		        await Database.updatePartialData(exist[0]._id, { ...Data }, 'accounts');
+		        alt.log(`[CORE] ~g~Player ${player.fullName} Saved~g~`);
+		    } else {
+		        const Jerico = await Database.insertData(Data, 'accounts', false);
+		    }
+		};
 	};
 
 	function ExtendPrototype(player) {
