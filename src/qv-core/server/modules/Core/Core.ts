@@ -170,10 +170,10 @@ export function GetPlayerReady(player) {
 	player.GetCharacters = async (license: string): Promise<Object | void | boolean> => {
 		try {
 			const players = await Database.fetchAllByField('license', license, 'accounts');
-			if (players[0] === undefined) {
-				return false;
-			}
-			return players;
+			// if (players[0] === undefined) {
+			// 	return {};
+			// }
+			return players || {};
 		} catch (error) {
 			alt.logError(error);
 		}
