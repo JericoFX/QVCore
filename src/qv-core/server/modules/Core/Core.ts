@@ -20,6 +20,7 @@ declare module 'alt-server' {
 }
 
 let Players = {};
+
 function GenerateCitizenID() {
     const uid = new ShortUniqueId({
         dictionary: 'alphanum_upper',
@@ -27,6 +28,7 @@ function GenerateCitizenID() {
     });
     return uid();
 }
+
 function ReturnDefaultData(newData) {
     return {
         license: 'JERICOFXX',
@@ -137,7 +139,7 @@ export function GetPlayerReady(player) {
             return;
         }
         if (citizenid) {
-            const exist = await Database.fetchData("citizenid",citizenid.toString(), 'accounts');
+            const exist = await Database.fetchData("citizenid", citizenid.toString(), 'accounts');
             if (exist === undefined) {
                 alt.logError(`[CORE] No player with the CitizenID: ${citizenid} Detected`);
                 return;
@@ -200,17 +202,24 @@ export function GetPlayerReady(player) {
         let Data = player.GetData();
         //alt.log(Data);
 
-        //     const exist = await Database.fetchWithSearch(Data.license, 'accounts');
-        //     Data.pos = player.pos;
-        //     if (exist.length > 0) {
-        //         await Database.updatePartialData(exist[0]._id, { ...Data }, 'accounts');
-        //         alt.log(`[CORE] ~g~Player ${player.fullName} Saved~g~`);
-        //     } else {
-        //         const Jerico = await Database.insertData(Data, 'accounts', false);
-        //     }
-        // };
-    }
+        const exist = await Database.fetchWithSearch(Data.license, 'accounts');
+        Data.pos = player.pos;
+        if (exist.length > 0) {
+            await Database.updatePartialData(exist[0]._id, {...Data}, 'accounts');
+            alt.log(`[CORE] ~g~Player ${player.fullName} Saved~g~`);
+        } else {
+            const Jerico = await Database.insertData(Data, 'accounts', false);
+            if (!Jerico) {
+                alt.logError(`[CORE] Could not save player Information`)
+                return
+            }
+        }
 
+		//PLAYER FUNCTIONS
+		player.GetPlayerCloth = async(citizenid:string)=>{
+				//const Data = await Database.fetchAllByField("")
+		}
+    }
 
 
     function ExtendPrototype(player) {

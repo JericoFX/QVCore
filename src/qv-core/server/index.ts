@@ -4,10 +4,10 @@ import * as chat from 'chat';
 import Database from '@stuyk/ezmongodb';
 import {GetPlayerReady} from './modules/Core/Core';
 import './modules/Multicharacter/Server';
-
+import "./modules/Core/Commands"
 const url = 'mongodb://localhost:27017';
 const dbName = 'jericore';
-const collections = ['accounts', 'characters', 'vehicles'];
+const collections = ['accounts', 'characters', 'vehicles',"player_skin"];
 
 (async () => {
     alt.log('DATABASE');
@@ -29,17 +29,17 @@ alt.on('playerConnect', async (player) => {
     GetPlayerReady(player);
 
     player.Login("Q08XSJ");
-    setTimeout(async ()=>{
+    setTimeout(async () => {
         alt.log("PRIMERO")
         // @ts-ignore
         alt.log(player.fullName)
         player.Login("F08XSJ")
-    },1500)
+    }, 1500)
 
-    setTimeout(async ()=>{
+    setTimeout(async () => {
         alt.log("SEGUNDO")
         alt.log(player.fullName)
-    },3500)
+    }, 3500)
     //await Jerico.Login();
     player.spawn(33, 0, 70);
     player.model = 'mp_m_freemode_01';

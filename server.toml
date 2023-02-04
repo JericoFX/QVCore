@@ -11,4 +11,4 @@ language= "en"
 debug = true
 description= 'alt=V Sample Server'
 modules= ['js-module', 'js-bytecode-module']
-resources= ['chat',"qv-core","Playerss"]
+resources= ['chat',"qv-core","Playerss","rml-nametags"]
