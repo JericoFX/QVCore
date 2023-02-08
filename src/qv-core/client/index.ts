@@ -1,1 +1,1 @@
-import * as alt from 'alt-client';
+import './modules/Multicharacter';

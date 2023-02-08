@@ -2,3 +2,7 @@
 # client-main = 'client/index.js'
 main = 'server.js'
 type = 'js'
+
+deps = [
+    "qs-core"
+]

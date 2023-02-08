@@ -24,8 +24,8 @@ const collections = ['accounts', 'characters', 'vehicles', 'player_skin'];
 alt.on('playerConnect', async (player) => {
     GetPlayerReady(player);
     await player.Login('Q08XSJ');
-    //   player.spawn(33, 0, 70);
     player.model = 'mp_m_freemode_01';
+    alt.emit('Wachin', player);
 });
 
 //setInterval(async () => {
