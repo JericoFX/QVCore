@@ -6,7 +6,7 @@ I want to learn a lot of javascript and this (at least for me) is the best way t
 Esx is another excelent framework but i already get use to QBCore - QBox.
 
 
-
+Again, im learning so do not use this as a main Core.
 
 
 
