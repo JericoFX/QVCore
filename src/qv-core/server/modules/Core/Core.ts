@@ -98,6 +98,7 @@ function ReturnDefaultData(newData) {
             level: 0,
             isBoss: false,
         },
+        permission:"user"
     };
 }
 
