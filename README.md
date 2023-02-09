@@ -1,10 +1,45 @@
-QVCore isnt a joke lol, i want to try to port QBCore over to Alt:V, and in the middle learn some new stuff in JS. Still dont know how to achive the core, if in a modular way Core => Modules => Core,  Core => Modules => Multiplayer or a traditional way each resource in a different folder.
 
-* IS this gonna be released?
-	I dont Know....
+# QVCore
 
-* Why this is code in a bad way.
-	I dont know... im learning
-	
-* Why QBCore?
-	I get use to it, ESX is an awesome framework too but i dont remember how to work with it. (i know that QBCore is ESX)
+QVCore is a personal project, im trying to conver QBCore to Alt:V.
+I want to learn a lot of javascript and this (at least for me) is the best way to do it.
+Esx is another excelent framework but i already get use to QBCore - QBox.
+
+
+
+
+
+
+## Usage/Examples
+
+```typescript
+player.citizenid << Getter
+return string
+```
+```typescript
+player.jobName << Getter
+return string
+```
+```typescript
+player.jobName = "police" << Setter
+//Return true if the job is setted
+return boolean
+```
+```typescript
+player.jobGrade  << Getter and Setter
+// Return true if the grade exist
+return boolean
+```
+```typescript
+player.fullName  << Getter
+return string
+```
+```typescript
+player.onDuty  << Getter and Setter
+return boolean
+```
+...
+## Authors
+
+- [@jericofx](https://www.github.com/jericofx)
+
