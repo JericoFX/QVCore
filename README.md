@@ -39,6 +39,15 @@ player.onDuty  << Getter and Setter
 return boolean
 ```
 ...
+
+
+## Special Thanks
+* QBCore team
+* QBox team
+* Overextended
+* ESX 
+* Project Sloth
+
 ## Authors
 
 - [@jericofx](https://www.github.com/jericofx)
