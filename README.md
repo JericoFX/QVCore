@@ -5,3 +5,6 @@ QVCore isnt a joke lol, i want to try to port QBCore over to Alt:V, and in the m
 
 * Why this is code in a bad way.
 	I dont know... im learning
+	
+* Why QBCore?
+	I get use to it, ESX is an awesome framework too but i dont remember how to work with it. (i know that QBCore is ESX)
