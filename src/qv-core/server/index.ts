@@ -28,7 +28,6 @@ alt.on('playerConnect', async (player) => {
 	} catch (error) {
 		alt.logError(error);
 	}
-
 	player.model = 'mp_m_freemode_01';
 	alt.emit('QVCore::server::OnMultiplayerReady', player);
 });
