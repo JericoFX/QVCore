@@ -22,10 +22,13 @@ const collections = ['accounts', 'characters', 'vehicles', 'player_skin'];
 })();
 //alt.log('SE LLAMO');
 alt.on('playerConnect', async (player) => {
-    GetPlayerReady(player);
-    await player.Login('Q08XSJ');
-    player.model = 'mp_m_freemode_01';
-    alt.emit('Wachin', player);
+    try {
+        await GetPlayerReady(player);
+    } catch (error) {}
+
+    // await player.Login('Q08XSJ');
+    // player.model = 'mp_m_freemode_01';
+    // alt.emit('Wachin', player);
 });
 
 //setInterval(async () => {
