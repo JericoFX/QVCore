@@ -2,7 +2,7 @@
 import * as alt from 'alt-server';
 import * as chat from 'chat';
 import Database from '@stuyk/ezmongodb';
-import { GetPlayerReady } from './modules/Core/Core';
+import {GetPlayerReady} from './modules/Core/Core';
 import './modules/Multicharacter/Server';
 import './modules/Core/Commands';
 const url = 'mongodb://localhost:27017';
@@ -10,22 +10,27 @@ const dbName = 'jericore';
 const collections = ['accounts', 'characters', 'vehicles', 'player_skin'];
 
 (async () => {
-    try {
-        const connect = await Database.init(url, dbName, collections);
-        await Database.createSearchIndex('license', 'accounts');
-        if (!connect) {
-            alt.log('Concha negra');
-        }
-    } catch (error) {
-        alt.logError(error);
-    }
+	try {
+		const connect = await Database.init(url, dbName, collections);
+		await Database.createSearchIndex('license', 'accounts');
+		if (!connect) {
+			alt.log('Concha negra');
+		}
+	} catch (error) {
+		alt.logError(error);
+	}
 })();
 //alt.log('SE LLAMO');
 alt.on('playerConnect', async (player) => {
-    GetPlayerReady(player);
-    await player.Login('Q08XSJ');
-    player.model = 'mp_m_freemode_01';
-    alt.emit('Wachin', player);
+	try {
+		await GetPlayerReady(player);
+		await player.Login('Q08XSJ');
+	} catch (error) {
+		alt.logError(error);
+	}
+
+	player.model = 'mp_m_freemode_01';
+	alt.emit('QVCore::server::OnMultiplayerReady', player);
 });
 
 //setInterval(async () => {
