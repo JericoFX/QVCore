@@ -14,7 +14,7 @@ const collections = ['accounts', 'characters', 'vehicles', 'player_skin'];
         const connect = await Database.init(url, dbName, collections);
         await Database.createSearchIndex('license', 'accounts');
         if (!connect) {
-            alt.log('Concha negra');
+            alt.log('Error connecting the Database');
         }
     } catch (error) {
         alt.logError(error);
