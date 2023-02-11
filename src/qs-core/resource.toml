@@ -1,3 +1,0 @@
-deps = [ 'chat' ]
-main = 'server/index.js'
-type = 'js'

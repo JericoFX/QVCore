@@ -31,7 +31,8 @@ alt.on('playerConnect', async (player) => {
     alt.emit('QVCore::server::OnMultiplayerReady', player);
 });
 
-alt.onClient('QVCore::server::SetPlayerData', async (loginInfo: string) => {
+alt.onClient('QVCore::server::SetPlayerData', async (player, loginInfo: string) => {
+    alt.logDebug(loginInfo);
     await player.Login(loginInfo.toString());
 });
 //setInterval(async () => {
