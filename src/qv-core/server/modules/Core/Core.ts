@@ -137,15 +137,13 @@ export function GetPlayerReady(player) {
 
         player.Login = async (citizenid?: string | boolean, newData: Object) => {
             if (!player && !player.valid) {
-                alt.logError(`[CORE] Player not valid`);
-                reject(true);
+                reject(`[CORE] Player not valid`);
                 return;
             }
             if (citizenid) {
                 const exist = await Database.fetchData('citizenid', citizenid.toString(), 'accounts');
                 if (exist === undefined) {
-                    alt.logError(`[CORE] No player with the CitizenID: ${citizenid} Detected`);
-                    reject(true);
+                    reject(`[CORE] No player with the CitizenID: ${citizenid} Detected`);
                     return;
                 }
                 alt.log(`[CORE] ~g~Loaded ${citizenid}~g~`);
@@ -157,7 +155,8 @@ export function GetPlayerReady(player) {
 
         player.SetData = async (newPayer, newData) => {
             if (!player && !player.valid) {
-                alt.logError(`[CORE] Player not valid`);
+                reject(`[CORE] Player not valid`);
+                return;
             }
             if (newPayer) {
                 if (newData.firstname !== '') {
@@ -234,8 +233,8 @@ export function GetPlayerReady(player) {
                     alt.logError(`[CORE] No Job with the name ${v} detected`);
                     return;
                 }
-                player.job = Jobs[v];
-                player.grade = Jobs[v].grades[0];
+                player.job = Jobs[v.toString()];
+                player.grade = Jobs[v.toString()].grades[0];
             },
         });
 
