@@ -3,8 +3,8 @@ import * as alt from 'alt-server';
 //import * as chat from 'chat';
 import ShortUniqueId from 'short-unique-id';
 import Database from '@stuyk/ezmongodb';
-import {Jobs} from '../../../shared/jobs';
-import {Config} from '../../../shared/config';
+import { Jobs } from '../../../shared/jobs';
+import { Config } from '../../../shared/config';
 
 declare module 'alt-server' {
     interface Player {
@@ -33,7 +33,7 @@ function ReturnDefaultData(newData) {
     return {
         license: 'JERICOFXX',
         citizenid: GenerateCitizenID(),
-        money: {...Config.money},
+        money: { ...Config.money },
         charinfo: {
             firstname: newData.firstname || 'TEST',
             lastname: newData.lastname || 'ANOTHER TEST',
@@ -99,7 +99,7 @@ function ReturnDefaultData(newData) {
             level: 0,
             isBoss: false,
         },
-        permission: "user"
+        permission: 'user',
     };
 }
 
@@ -111,8 +111,8 @@ export function GetPlayerReady(player) {
     return new Promise((resolve, reject) => {
         if (!player && !player.valid) {
             alt.logError(`[CORE] Player not valid`);
-			reject(true)
-            return
+            reject(true);
+            return;
         }
         player.license = 'JERICOFXX';
         /**
@@ -138,14 +138,14 @@ export function GetPlayerReady(player) {
         player.Login = async (citizenid?: string | boolean, newData: Object) => {
             if (!player && !player.valid) {
                 alt.logError(`[CORE] Player not valid`);
-				reject(true)
+                reject(true);
                 return;
             }
             if (citizenid) {
                 const exist = await Database.fetchData('citizenid', citizenid.toString(), 'accounts');
                 if (exist === undefined) {
                     alt.logError(`[CORE] No player with the CitizenID: ${citizenid} Detected`);
-					reject(true)
+                    reject(true);
                     return;
                 }
                 alt.log(`[CORE] ~g~Loaded ${citizenid}~g~`);
@@ -162,7 +162,7 @@ export function GetPlayerReady(player) {
             if (newPayer) {
                 if (newData.firstname !== '') {
                     newData.job = Jobs['unemployed'];
-                    player.setSyncedMeta('charinfo', {...newData});
+                    player.setSyncedMeta('charinfo', { ...newData });
                     player.spawn(0, 0, 70);
                 }
             }
@@ -171,6 +171,10 @@ export function GetPlayerReady(player) {
                 player[key] = newData[key];
             }
 
+            //This event is fired when the player has loaded
+            alt.emitClient(player, 'QVCore::client::OnPlayerConnect');
+            //This event is fired when the player has loaded
+            alt.emit('QVCore::server::OnPlayerConnect', player);
             Players.set(player.id, newData);
             return player.Save();
         };
@@ -199,14 +203,14 @@ export function GetPlayerReady(player) {
             Data.pos = player.pos;
             if (exist.length > 0) {
                 // @ts-ignore
-                await Database.updatePartialData(exist[0]._id, {...Data}, 'accounts');
+                await Database.updatePartialData(exist[0]._id, { ...Data }, 'accounts');
                 alt.log(`[CORE] ~g~Player ${player.fullName} Saved~g~`);
             } else {
                 const Jerico = await Database.insertData(Data, 'accounts', false);
             }
         };
-		resolve(true)
-    })
+        resolve(true);
+    });
 
     function ExtendPrototype(player) {
         Object.defineProperty(alt.Player.prototype, 'jobName', {
@@ -263,7 +267,7 @@ export function GetPlayerReady(player) {
              * @returns
              */
             set: (v: number) => {
-                if (!Jobs[player.job.name].grades[v] || typeof v !== "number") {
+                if (!Jobs[player.job.name].grades[v] || typeof v !== 'number') {
                     alt.logError(`[CORE] No Grade with the number ${v} detected`);
                     return;
                 }
